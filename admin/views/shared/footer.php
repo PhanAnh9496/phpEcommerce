@@ -27,7 +27,7 @@
 </script>
 <script>
     $('.deleteitem').on('click', function () {
-        return confirm('Are you sure?');
+        return confirm('Bạn chắc chắn muốn xóa?');
     });
 </script>
 </body>

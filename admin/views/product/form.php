@@ -97,7 +97,7 @@
             <div class="col-sm-9">
 
                 <input name="createdate" type="date" value="<?php echo $product ? $product['Createdate'] : ''; ?>"
-                       class="form-control" id="createdate"  min="2000-01-02" max="2016-12-31"/>
+                       class="form-control" id="createdate"/>
             </div>
         </div>
 

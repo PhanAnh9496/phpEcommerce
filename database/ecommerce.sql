@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 04, 2017 lúc 05:50 SA
--- Phiên bản máy phục vụ: 10.1.21-MariaDB
--- Phiên bản PHP: 5.6.30
+-- Thời gian đã tạo: Th10 19, 2019 lúc 02:28 AM
+-- Phiên bản máy phục vụ: 10.4.6-MariaDB
+-- Phiên bản PHP: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `1241`
+-- Cơ sở dữ liệu: `ecommerce`
 --
 
 -- --------------------------------------------------------
@@ -64,8 +66,7 @@ CREATE TABLE `banner` (
 INSERT INTO `banner` (`Id`, `Name`, `Image`, `IsActive`, `Visible`, `Description`) VALUES
 (1, 'banner trái', 'banner-1-banner-trai.jpg', 1, 1, 'banner bên trái'),
 (2, 'banner phải', 'banner-2-banner-phai.jpg', 1, 2, 'banner bên phải'),
-(3, 'Banner Quảng Cáo Ngang 1', 'banner-3-banner-quang-cao-ngang-1.jpg', 1, 3, 'Nằm dưới sản phẩm mới'),
-(5, '1 trung tam', 'banner-5-1-trung-tam1 trung tam.jpg', 0, 4, 'sdadadasd');
+(3, 'Banner Quảng Cáo Ngang 1', 'banner-3-banner-quang-cao-ngang-1.jpg', 1, 3, 'Nằm dưới sản phẩm mới');
 
 -- --------------------------------------------------------
 
@@ -99,25 +100,13 @@ INSERT INTO `categories` (`Id`, `Name`, `SupplyId`, `Position`, `alias`) VALUES
 CREATE TABLE `comment` (
   `Id` int(11) NOT NULL,
   `ProductId` int(11) DEFAULT NULL,
-  `Content` longtext,
+  `Content` longtext DEFAULT NULL,
   `CreateDate` datetime DEFAULT NULL,
   `Author` varchar(150) DEFAULT NULL,
   `ParentId` int(11) DEFAULT NULL,
   `Email` varchar(150) DEFAULT NULL,
   `Phone` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `comment`
---
-
-INSERT INTO `comment` (`Id`, `ProductId`, `Content`, `CreateDate`, `Author`, `ParentId`, `Email`, `Phone`) VALUES
-(1, 1, 'comment 1', '2016-02-26 00:00:00', '1 as', 0, '1', '0912123456'),
-(2, 1, 'MIỄN PHÍ GIAO HÀNG TRONG PHẠM VI 10KM', '2016-02-26 00:00:00', '2', 0, '2', ''),
-(3, 1, '2', '2016-02-26 00:00:00', '2', 0, '2', ''),
-(4, 3, 'noioj dung comment 4dasdad', '2016-02-26 00:00:00', '4', 2, '4', '111111111111'),
-(5, 1, 'noi dung comment 5s dasd', '2090-02-27 00:00:00', '41', 0, '41 1', '1'),
-(6, 13, 's                        ', '2016-03-01 19:10:00', 's', 0, 's', '');
 
 -- --------------------------------------------------------
 
@@ -142,7 +131,7 @@ CREATE TABLE `contactinfo` (
 --
 
 INSERT INTO `contactinfo` (`Id`, `Address`, `Country`, `Mobile`, `Phone`, `Email`, `Facebook`, `Zalo`, `Skype`) VALUES
-(1, 'Thanh xuân', 'Hà Nội', '0868896944', '0868896944', 'scodeweb2016@gmail.com', 'Facebook.com', '0868896944', 'cthoangson');
+(1, 'Hoàng Mai', 'Hà Nội', '0902132280', '0902132280', 'phananh9496@gmail.com', 'Phan Anh', 'phananh', 'Pa');
 
 -- --------------------------------------------------------
 
@@ -154,7 +143,7 @@ CREATE TABLE `customer` (
   `CustomerId` int(11) NOT NULL,
   `Name` varchar(550) DEFAULT NULL,
   `Image` varchar(350) DEFAULT NULL,
-  `Links` longtext,
+  `Links` longtext DEFAULT NULL,
   `Detail` varchar(2500) DEFAULT NULL,
   `Email` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -173,17 +162,6 @@ CREATE TABLE `feedback` (
   `Subject` varchar(300) NOT NULL,
   `Createtime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `feedback`
---
-
-INSERT INTO `feedback` (`Id`, `Name`, `Email`, `Mobile`, `Subject`, `Createtime`) VALUES
-(1, 'aaaaaaaa', 'a', '1', ' a', '2016-03-04 00:00:00'),
-(2, 'vu dinh dong', 'dongvu2vn@gmail.com', '0987 192 209', 'Nếu tham số $length được sử dụng và là một số dương, chuỗi trả về sẽ bao gồm $length ký tự, tính từ vị trí thứ $start (tùy thuộc vào độ dài của chuỗi).\\r\\nNếu tham số $length được sử dụng và là một số âm, chuỗi trả về được tính từ vị trí $start đến vị trí $length (trong đó vị trí $length được tính t', '2016-03-10 00:00:00'),
-(4, 'dá', 'sadad', 'dsada', ' sadadad', '2016-03-03 13:20:59'),
-(5, 'dá', 'sadad', 'dsada', ' sadadad', '2016-03-03 13:26:00'),
-(6, 'h', 'j', 'k', 'm ', '2016-03-04 22:48:21');
 
 -- --------------------------------------------------------
 
@@ -213,8 +191,8 @@ INSERT INTO `imageslide` (`Id`, `Image`, `SlideId`, `IsActive`) VALUES
 
 CREATE TABLE `intro` (
   `Id` int(11) NOT NULL,
-  `Title` text,
-  `Content` longtext,
+  `Title` text DEFAULT NULL,
+  `Content` longtext DEFAULT NULL,
   `Link` varchar(250) DEFAULT NULL,
   `IsActive` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -248,7 +226,7 @@ CREATE TABLE `livesport` (
 
 INSERT INTO `livesport` (`Id`, `Title`, `Link`, `Description`, `Url1`, `Url2`) VALUES
 (1, 'Trực tiếp bóng đá C1', 'https://www.youtube.com/embed/QfeISNVwnfY', 'Trực tiếp tr&ecirc;n vtv3', 'http://localhost:8080/ShopOnline/livesport', 'http://localhost:8080/ShopOnline/livesport'),
-(2, 'Trực tiếp tennit', 'https://www.youtube.com/embed/QfeISNVwnfY', 'Trực tiếp trên vtv3', 'http://localhost:8080/ShopOnline/livesport', '');
+(3, 'the thao', 'youtube.com', 'hahahah', 'youtube.com.vn', 'youtube.com.vn');
 
 -- --------------------------------------------------------
 
@@ -315,33 +293,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`Id`, `Customer`, `Address`, `Phone`, `Createtime`, `Status`, `Email`, `Cart_total`) VALUES
-(1, '3', '3243423424324', '0918190234', '2016-03-02 15:45:50', 0, '', 0),
-(2, 'a', 'a', '0912123456', '2016-03-02 15:49:55', 0, '', 0),
-(3, 'aaa', 'd', '0918190234', '2016-03-02 15:54:52', 0, '', 0),
-(4, '1', 'a', '0912123456', '2016-03-02 15:59:48', 0, '', 0),
-(5, 'a', 'd', '0912123456', '2016-03-02 20:07:18', 1, '', 0),
-(6, 'aaa', 'a', '0912123456', '2016-03-04 12:13:39', 0, '', 0),
-(7, 'a', 'b', '0912123456', '2016-03-04 12:17:36', 0, '', 0),
-(8, 'a', 'd', '0912123456', '2016-03-04 12:18:28', 0, '', 111091),
-(9, 'a', 'a', '0912123456', '2016-03-05 22:09:36', 0, '', 12126),
-(10, 'moi rewrite', 'd', '0912123456', '2016-03-10 00:56:00', 0, '', 1000000000),
-(11, 'aaa', 'a', '0912123456', '2016-03-10 02:42:47', 0, '', 425000),
-(12, 'aaa', 'a', '0912123456', '2016-03-10 10:26:45', 0, '', 1000000000),
-(13, '1', 'a', '0912123456', '2016-03-10 10:29:36', 0, '', 1000000000),
-(14, 'd', 'd', '0912123456', '2016-03-10 14:32:39', 0, '', 4000000000),
-(15, 'a', 'a', '0912123456', '2016-03-10 14:51:48', 0, '', 20000),
-(16, 'a', 'a', '0912123456', '2016-03-10 21:37:37', 0, '', 1000000000),
-(17, 'a', 'a', '0912123456', '2016-03-10 21:54:39', 0, '', 10000),
-(18, 's', 'x', '0918190234', '2016-03-10 21:55:34', 0, '', 60),
-(19, '1', 'd', '0918190234', '2016-03-10 21:59:17', 0, '', 10000),
-(20, '1', 'a', '0918190234', '2016-03-10 22:00:54', 0, '', 10000),
-(21, '1', 'a', '0912123456', '2016-03-10 22:01:19', 0, '', 10000),
-(22, '1', 'a', '0912123456', '2016-03-10 22:02:31', 0, '', 100000),
-(23, '1', 'd', '0912123456', '2016-03-10 22:07:29', 0, '', 1000000000),
-(24, 'a', 'd', '0918190234', '2016-03-10 23:13:06', 0, '', 135000),
-(25, 'moi nhat', 'moi nhat', '0912123456', '2016-03-10 23:18:09', 1, '', 425000),
-(26, 'a', 'a', '0912123456', '2016-03-10 23:26:21', 1, '', 560000),
-(27, 'a', 'd', '0918190234', '2016-03-17 16:43:20', 0, '', 112800);
+(28, 'hahah', 'hn', '0903222890', '2019-11-10 11:39:31', 1, '', 100001),
+(29, 'adsd', 'adasd', '0903239393', '2019-11-10 16:31:27', 1, '', 1281280),
+(30, 'P', 'P', '92919392392', '2019-11-16 08:55:51', 1, '', 123855),
+(31, 'pj', 'jjj', '09097373789', '2019-11-16 14:25:08', 1, '', 499);
 
 -- --------------------------------------------------------
 
@@ -396,7 +351,14 @@ INSERT INTO `order_detail` (`Id`, `OrderId`, `ProductId`, `Quantity`, `Price`, `
 (31, 25, 15, 1, 500000, ''),
 (32, 26, 15, 1, 500000, ''),
 (33, 26, 14, 1, 150000, ''),
-(34, 27, 34, 1, 120000, '');
+(34, 27, 34, 1, 120000, ''),
+(35, 28, 21, 1, 1, ''),
+(36, 28, 27, 1, 100000, ''),
+(37, 29, 33, 1, 1456000, ''),
+(38, 30, 36, 1, 399, ''),
+(39, 30, 5, 1, 123456, ''),
+(40, 31, 20, 1, 100, ''),
+(41, 31, 36, 1, 399, '');
 
 -- --------------------------------------------------------
 
@@ -411,12 +373,12 @@ CREATE TABLE `product` (
   `CategoryId` int(11) DEFAULT NULL,
   `SubCategoryId` int(11) DEFAULT NULL,
   `SupplyId` int(11) DEFAULT NULL,
-  `Description` longtext,
+  `Description` longtext DEFAULT NULL,
   `Price` int(11) NOT NULL,
   `Color` varchar(250) DEFAULT NULL,
   `Material` varchar(250) DEFAULT NULL,
   `Size` varchar(20) NOT NULL,
-  `Detail` longtext,
+  `Detail` longtext DEFAULT NULL,
   `CreateBy` int(11) DEFAULT NULL,
   `Createdate` date DEFAULT NULL,
   `EditBy` int(11) DEFAULT NULL,
@@ -436,16 +398,16 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`Id`, `Name`, `TypeId`, `CategoryId`, `SubCategoryId`, `SupplyId`, `Description`, `Price`, `Color`, `Material`, `Size`, `Detail`, `CreateBy`, `Createdate`, `EditBy`, `EditDate`, `TotalView`, `isSaleOff`, `Percent_off`, `Image1`, `Image2`, `Image3`, `Image4`, `alias`) VALUES
-(1, 'Áo khoác mùa hè hà nội', 1, 2, 2, 1, '<img alt=\"á\" src=\"/ShopOnline/admin/themes/upload/images/799_28_1.jpg\" style=\"height:800px; width:600px\" /><img alt=\"\" src=\"/ShopOnline/admin/themes/upload/images/847_thay_th____2.jpg\" style=\"height:800px; width:600px\" /><img alt=\"\" src=\"/ShopOnline/admin/themes/upload/images/407_0_4_1.jpg\" style=\"height:267px; margin-left:100px; margin-right:100px; width:200px\" />vu dinh dong<br />\r\n&nbsp;', 100, 'Vàng', 'catton', '', '1m6 55klg mac cỡ nào đc bạn ơi', 0, '2016-01-29', 0, '2016-01-23', 90, 0, 0, '1-ao-khoac.jpg', '1-ao-khoac2.jpg', '', '', 'ao-khoac-mua-he-ha-noi'),
+(1, 'Áo khoác mùa hè hà nội', 1, 2, 2, 1, '<img alt=\"á\" src=\"/ShopOnline/admin/themes/upload/images/799_28_1.jpg\" style=\"height:800px; width:600px\" /><img alt=\"\" src=\"/ShopOnline/admin/themes/upload/images/847_thay_th____2.jpg\" style=\"height:800px; width:600px\" /><img alt=\"\" src=\"/ShopOnline/admin/themes/upload/images/407_0_4_1.jpg\" style=\"height:267px; margin-left:100px; margin-right:100px; width:200px\" />vu dinh dong<br />\r\n&nbsp;', 100, 'Vàng', 'catton', '', '1m6 55klg mac cỡ nào đc bạn ơi', 0, '2016-01-29', 0, '2016-01-23', 89, 0, 0, '1-ao-khoac.jpg', '1-ao-khoac2.jpg', '', '', 'ao-khoac-mua-he-ha-noi'),
 (2, 'Áo khoác choàng lót lông AK-36212', 1, 1, 3, 1, '&Aacute;o kho&aacute;c cho&agrave;ng l&oacute;t l&ocirc;ng AK-36212 &Aacute;o kho&aacute;c cho&agrave;ng l&oacute;t l&ocirc;ng AK-36212', 1600000, 'Vàng', '620.000đGIÁ NY: 1.160.000 đ', '', '1m6 55klg mac cỡ nào đc bạn ơi', 0, '2016-01-31', 0, '2016-01-23', 149, 1, 0, '2-ao-khoac-choang-lot-long-ak36212.jpg', '2-ao-khoac-choang-lot-long-ak362122.jpg', 'product32-ao-khoac-choang-lot-long-ak36212.jpg', '', 'aokhoac2'),
 (3, 'Áo khoác kaki lót lông AK-31112', 2, 1, 3, 1, '&Aacute;o kho&aacute;c kaki l&oacute;t l&ocirc;ng AK-31112 &Aacute;o kho&aacute;c kaki l&oacute;t l&ocirc;ng AK-31112<br />\r\n<img alt=\"\" src=\"/ShopOnline/admin/themes/upload/images/807_2013606805_1641250346.jpg\" style=\"border-style:solid; border-width:1px; height:371px; margin-left:111px; margin-right:111px; width:400px\" /><br />\r\n<img alt=\"\" src=\"/ShopOnline/admin/themes/upload/images/407_0_4_1.jpg\" style=\"height:400px; margin-left:150px; margin-right:150px; width:300px\" />', 110, 'vàng', 'vàng', '', '/public/images/product/aokhoac2.jpg\r\n/public/images/product/aokhoac2.jpg', NULL, '2016-01-22', NULL, '2016-01-23', 25, 0, 0, '3-ao-khoac-kaki-lot-long-ak31112.jpg', 'vàng', '', '', 'Ao khoac kaki lot long AK31112'),
 (4, 'Áo khoác kaki lót lông AK-31112', 2, 1, 3, 1, '&Aacute;o kho&aacute;c kaki l&oacute;t l&ocirc;ng AK-31112 &Aacute;o kho&aacute;c kaki l&oacute;t l&ocirc;ng AK-31112', 110, 'vàng', 'vàng', '', '/public/images/product/aokhoac2.jpg\r\n/public/images/product/aokhoac2.jpg', NULL, '2016-01-22', NULL, '2016-01-23', 20, 0, 0, '4-ao-khoac-kaki-lot-long-ak31112.jpg', 'product24-ao-khoac-kaki-lot-long-ak31112.jpg', '', '', 'Ao khoac kaki lot long AK31112'),
-(5, 'Áo khoác kaki lót bông MT-2026', 3, 1, 4, 1, '&Aacute;o kho&aacute;c kaki l&oacute;t b&ocirc;ng MT-2026 &Aacute;o kho&aacute;c kaki l&oacute;t b&ocirc;ng MT-2026', 123456, 'a', 'a', '', 'public/images/product/aokhoac2.jpg\r\npublic/images/product/aokhoac2.jpg', NULL, '2016-01-30', NULL, '2016-01-23', 23, 0, 0, '5-ao-khoac-kaki-lot-bong-mt2026.jpg', '5-ao-khoac-kaki-lot-bong-mt20262.jpg', '', '', ''),
+(5, 'Áo khoác kaki lót bông MT-2026', 3, 1, 4, 1, '&Aacute;o kho&aacute;c kaki l&oacute;t b&ocirc;ng MT-2026 &Aacute;o kho&aacute;c kaki l&oacute;t b&ocirc;ng MT-2026', 123456, 'a', 'a', '', 'public/images/product/aokhoac2.jpg\r\npublic/images/product/aokhoac2.jpg', NULL, '2016-01-30', NULL, '2016-01-23', 25, 0, 0, '5-ao-khoac-kaki-lot-bong-mt2026.jpg', '5-ao-khoac-kaki-lot-bong-mt20262.jpg', '', '', ''),
 (6, 'Áo khoác AK-723', 2, 3, 3, 2, '&Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723', 100, 'vàng', 'Áo khoác AK-723', '', 'Áo khoác AK-723\r\nÁo khoác AK-723\r\nÁo khoác AK-723\r\n', NULL, '2016-02-24', NULL, '2016-01-23', 77, 0, 0, '6-ao-khoac-ak723.jpg', 'product26-ao-khoac-ak723.jpg', 'product36-ao-khoac-ak723.jpg', '', 'ao-khoac-ak723'),
 (7, 'Áo khoác AK-112', 2, 2, 1, 2, '&Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723', 100, 'vàng', 'Áo khoác AK-723', '', 'Áo khoác AK-723\r\nÁo khoác AK-723\r\nÁo khoác AK-723\r\n', NULL, '2016-01-22', NULL, '2016-01-23', 12, 0, 0, '7-ao-khoac-ak112.jpg', 'Áo khoác AK-723', '', '', 'ao-khoac-ak112'),
 (8, 'Áo khoác AK-7234', 2, 2, 1, 2, '&Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723', 100, 'vàng', 'Áo khoác AK-723', '', 'Áo khoác AK-723\r\nÁo khoác AK-723\r\nÁo khoác AK-723\r\n', NULL, '2016-01-22', NULL, '2016-01-23', 12, 0, 0, '8-ao-khoac-ak7234.jpg', 'product28-ao-khoac-ak7234.jpg', '', '', 'ao-khoac-ak7234'),
-(9, 'Áo khoác XK-71', 2, 2, 1, 2, '&Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723', 100, 'vàng', 'Áo khoác AK-723', '', 'Áo khoác AK-723\r\nÁo khoác AK-723\r\nÁo khoác AK-723\r\n', NULL, '2016-02-09', NULL, '2016-01-23', 20, 0, 0, '9-ao-khoac-xk71.jpg', 'Áo khoác AK-723', '', 'product49-ao-khoac-xk71.jpg', 'ao-khoac-xk71'),
-(10, 'Áo khoác AK-223', 2, 2, 1, 2, '&Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723', 100, 'vàng', 'Áo khoác AK-723', '', 'Áo khoác AK-723\r\nÁo khoác AK-723\r\nÁo khoác AK-723\r\n', NULL, '2016-01-22', NULL, '2016-01-23', 17, 0, 0, '10-ao-khoac-ak223.jpg', '10-ao-khoac-ak2232.jpg', '', '', 'ao-khoac-ak223'),
+(9, 'Áo khoác X', 2, 2, 1, 2, '&Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723', 900000000, 'vàng', 'Áo khoác AK-723', '', 'Áo khoác AK-723\r\nÁo khoác AK-723\r\nÁo khoác AK-723\r\n', NULL, '2016-02-09', NULL, '2016-01-23', 20, 0, 0, '9-ao-khoac-xk71.jpg', 'Áo khoác AK-723', '', 'product49-ao-khoac-xk71.jpg', 'ao-khoac-x'),
+(10, 'Áo khoác AK-223', 2, 2, 1, 2, '&Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723 &Aacute;o kho&aacute;c AK-723', 100, 'vàng', 'Áo khoác AK-723', '', 'Áo khoác AK-723\r\nÁo khoác AK-723\r\nÁo khoác AK-723\r\n', NULL, '2016-01-22', NULL, '2016-01-23', 18, 0, 0, '10-ao-khoac-ak223.jpg', '10-ao-khoac-ak2232.jpg', '', '', 'ao-khoac-ak223'),
 (13, 'Áo phong 19', 3, 2, 2, NULL, 'tran hạo nam', 101000, 'trắng', 'cotton', '', NULL, NULL, '2016-02-29', NULL, NULL, 0, 1, 10, '13-dsd.jpg', NULL, '', '', ''),
 (14, 'Áo phông mới 2015', 3, 2, 2, NULL, '&Aacute;o ph&ocirc;ng mới 2015', 150000, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10, 'product114-ao-phong-moi-2015.jpg', NULL, '', '', ''),
 (15, 'Áo phông polo', 3, 2, 2, 1, '&Aacute;o ph&ocirc;ng polo', 500000, 'sọc đỏ', 'catton', 'L, XL', NULL, NULL, '2016-02-29', NULL, NULL, 39, 1, 15, 'product115-ao-phong-polo.jpg', 'product215-ao-phong-polo.jpg', '', '', ''),
@@ -453,21 +415,22 @@ INSERT INTO `product` (`Id`, `Name`, `TypeId`, `CategoryId`, `SubCategoryId`, `S
 (17, 'Áo phong 15', 1, 2, 2, 1, '&Aacute;o phong 15', 100000, 'tim', 'cottton', '', NULL, NULL, '0000-00-00', NULL, NULL, 0, 0, 0, 'product117-ao-phong-15.jpg', NULL, '', '', 'ao-phong-15'),
 (18, 'Sơ mi dài tay', 2, 2, 1, NULL, 'sơ my dai tay', 100000, 'vàng, xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 17, 0, 0, 'product118-so-mi-dai-tay.jpg', 'product218-so-mi-dai-tay.jpg', '', '', 'so-mi-dai-tay'),
 (19, ' margin: ', 3, 2, 1, NULL, 'hty tgr sbgdf bfg', 100, 'vàng, trắng', 'cotton', 'M, L, XL', NULL, NULL, '2016-03-04', NULL, NULL, 4, 0, 5, 'product119-margin.jpg', 'product219-margin.jpg', '', '', ''),
-(20, '1 3 5 7 9 12 15 18 21 24 2791', 1, 2, 1, NULL, '', 100, 'xanh, trắng', 'Cotton', 'XL,L', NULL, NULL, '2016-03-04', NULL, NULL, 139, 0, 0, 'product120-margin-09.jpg', 'product220-margin-09.jpg', '', '', '1-3-5-7-9-12-15-18-21-24-2791'),
-(21, 'áo khoác mùa hè catton hà', 1, 2, 1, NULL, 'nguy&ecirc;nz', 1, 'xanh, trắng', 'Cotton', 'L, XL', NULL, NULL, '2016-03-04', NULL, NULL, 88, 0, 7, 'product121-margin-09-em.jpg', 'product221-margin-09-em.jpg', '', '', 'ao-khoac-mua-he-catton-ha'),
-(22, ' margin 0 0', 1, 2, 1, NULL, 'aaaaaa', 100000, 'Vàng', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 14, 0, 5, 'product122-margin-0-0.jpg', 'product222-margin-0-0.jpg', 'product322-margin-0-0.jpg', '', ''),
-(23, 'sơ mi bò', 1, 2, 1, NULL, '<pre>\r\n\\r\\n<strong>margin</strong>: 0.9<strong>em </strong>0<strong>em </strong>0 0;</pre>\r\n\\r\\n', 120000, 'Trắng , xanh', 'jean', 'L, XL', NULL, NULL, '2016-03-04', NULL, NULL, 2, 0, 7, 'product123-so-mi-bo.jpg', 'product223-so-mi-bo.jpg', 'product323-so-mi-bo.jpg', 'product423-so-mi-bo.jpg', 'so-mi-bo'),
-(24, 'sơ mi 12', 1, 2, 1, NULL, 'sơ mi b&ograve;', 1220000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 2, 0, 5, 'product124-so-mi-12.jpg', 'product224-so-mi-12.jpg', '', '', 'so-mi-12'),
+(20, '1 3 5 7 9 12 15 18 21 24 2791', 1, 2, 1, NULL, '', 100, 'xanh, trắng', 'Cotton', 'XL,L', NULL, NULL, '2016-03-04', NULL, NULL, 140, 0, 0, 'product120-margin-09.jpg', 'product220-margin-09.jpg', '', '', '1-3-5-7-9-12-15-18-21-24-2791'),
+(21, 'áo khoác mùa hè catton hà', 1, 2, 1, NULL, 'nguy&ecirc;nz', 1, 'xanh, trắng', 'Cotton', 'L, XL', NULL, NULL, '2016-03-04', NULL, NULL, 87, 0, 7, 'product121-margin-09-em.jpg', 'product221-margin-09-em.jpg', '', '', 'ao-khoac-mua-he-catton-ha'),
+(22, ' margin 0 0', 1, 2, 1, NULL, 'aaaaaa', 100000, 'Vàng', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 16, 0, 5, 'product122-margin-0-0.jpg', 'product222-margin-0-0.jpg', 'product322-margin-0-0.jpg', '', ''),
+(23, 'sơ mi bò', 1, 2, 1, NULL, '<pre>\r\n\\r\\n<strong>margin</strong>: 0.9<strong>em </strong>0<strong>em </strong>0 0;</pre>\r\n\\r\\n', 120000, 'Trắng , xanh', 'jean', 'L, XL', NULL, NULL, '2016-03-04', NULL, NULL, 3, 0, 7, 'product123-so-mi-bo.jpg', 'product223-so-mi-bo.jpg', 'product323-so-mi-bo.jpg', 'product423-so-mi-bo.jpg', 'so-mi-bo'),
+(24, 'sơ mi 12', 1, 2, 1, NULL, 'sơ mi b&ograve;', 1220000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 3, 0, 5, 'product124-so-mi-12.jpg', 'product224-so-mi-12.jpg', '', '', 'so-mi-12'),
 (25, 'x1', 1, 2, 1, NULL, '', 123000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 11, 0, 0, 'product125-x1.jpg', 'product225-x1.jpg', '', '', 'x1'),
 (26, 'sơ mi bò aaa ', 1, 2, 1, NULL, 'aaa&nbsp;', 302000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 2, 0, 7, 'product126-so-mi-bo-aaa.jpg', 'product226-so-mi-bo-aaa.jpg', '', '', 'so-mi-bo-aaa'),
-(27, 'aaa 1', 1, 2, 1, NULL, '', 100000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 1, 0, 0, 'product127-aaa-1.jpg', 'product227-aaa-1.jpg', '', '', 'aaa-1'),
+(27, 'aaa 1', 1, 2, 1, NULL, '', 100000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 2, 0, 0, 'product127-aaa-1.jpg', 'product227-aaa-1.jpg', '', '', 'aaa-1'),
 (28, 'Áo phông', 2, 2, 2, NULL, 'ao moi', 200000, 'xl', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 0, 0, 0, 'product128-ao-phong.jpg', 'product228-ao-phong.jpg', '', '', 'ao-phong'),
 (29, 'Áo phông 03', 2, 2, 2, NULL, 'ao phong', 300000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 1, 0, 0, 'product129-ao-phong-03.jpg', 'product229-ao-phong-03.jpg', '', '', 'ao-phong-03'),
 (30, 'Áo phông 09', 2, 2, 2, NULL, 'ao phong', 2000000, 'Trắng , xanh', 'cotton', 'L, XL', NULL, NULL, '2016-03-04', NULL, NULL, 1, 0, 0, 'product130-ao-phong-09.jpg', NULL, '', '', ''),
-(31, 'Áo phông 1', 2, 2, 2, NULL, '<a href=\\\"http://h2t-shop.com/ao-phong/c8.html\\\">Áo ph&ocirc;ng</a>&nbsp;', 321110, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-04', NULL, NULL, 3, 0, 0, 'product131-ao-phong-1.jpg', NULL, '', '', ''),
 (32, 'Áo phông 03', 3, 2, 1, NULL, 'aa vgb', 199900, 'Trắng , xanh', 'Cotton', 'L, XL', NULL, NULL, '2016-03-04', NULL, NULL, 1, 1, 19, 'product132-ao-phong-03.jpg', NULL, '', '', ''),
-(33, '12 Áo phông', 3, 2, 1, NULL, 'bg vf sd', 1456000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-05', NULL, NULL, 3, 1, 12, 'product133-12-ao-phong.jpg', NULL, '', '', ''),
-(34, 'Áo phông 12', 3, 2, 2, NULL, '&aacute; a d<br />\r\n<img alt=\"\" src=\"/ShopOnline/admin/themes/upload/images/407_0_4_1.jpg\" style=\"height:533px; margin-left:100px; margin-right:100px; width:400px\" />', 120000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-18', NULL, NULL, 10, 1, 6, 'product134-ao-phong-12.jpg', 'product234-ao-phong-12.jpg', '', '', 'ao-phong-12');
+(33, '12 Áo phông', 3, 2, 1, NULL, 'bg vf sd', 1456000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-05', NULL, NULL, 6, 1, 12, 'product133-12-ao-phong.jpg', NULL, '', '', ''),
+(34, 'Áo phông 12', 3, 2, 2, NULL, '&aacute; a d<br />\r\n<img alt=\"\" src=\"/ShopOnline/admin/themes/upload/images/407_0_4_1.jpg\" style=\"height:533px; margin-left:100px; margin-right:100px; width:400px\" />', 120000, 'Trắng , xanh', 'Cotton', 'L, Xl, M', NULL, NULL, '2016-03-18', NULL, NULL, 10, 1, 6, 'product134-ao-phong-12.jpg', 'product234-ao-phong-12.jpg', '', '', 'ao-phong-12'),
+(35, 'the nort face', 1, 2, 9, NULL, 'chhaschshcdhhscs', 299, 'xanh dương', 'polyeste', 'L', NULL, NULL, '2019-10-19', NULL, NULL, 1, 0, 0, 'product135-the-nort-face.jpg', 'product235-the-nort-face.png', '', '', 'the-nort-face'),
+(36, 'Uniqlo', 1, 1, 3, NULL, 'hahahahaa', 399, 'đen', 'cotton', 'M', NULL, NULL, '2019-10-20', NULL, NULL, 5, 0, 0, 'product136-uniqlo.jpg', 'product236-uniqlo.jpg', '', '', 'uniqlo');
 
 -- --------------------------------------------------------
 
@@ -614,8 +577,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Id`, `Username`, `Password`, `Name`, `CreateDate`, `RoleId`, `Avatar`, `Email`, `Phone`, `Address`) VALUES
-(25, 'admin', 'c4ca4238a0b923820dcc509a6f75849b', 'admin', '2016-03-18', 1, 'avatar_name25-.jpg', 'scodeweb2016@gmail.com', '0945802194', 'hanoi'),
-(26, 'user', 'c4ca4238a0b923820dcc509a6f75849b', 'user', '2016-03-18', 2, 'avatar_name26-user.png', 'user@user.com', '0945802194', 'hanoi');
+(25, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin', '2019-11-18', 1, 'avatar_name25-.jpg', 'phananh@gmail.com', '0902132280', 'hanoi'),
+(26, 'user', 'c4ca4238a0b923820dcc509a6f75849b', 'user', '2019-11-18', 2, 'avatar_name26-user.png', 'user@user.com', '0945802194', 'hanoi');
 
 -- --------------------------------------------------------
 
@@ -625,7 +588,7 @@ INSERT INTO `user` (`Id`, `Username`, `Password`, `Name`, `CreateDate`, `RoleId`
 
 CREATE TABLE `user_online` (
   `session` varchar(100) NOT NULL DEFAULT '''''',
-  `time` int(11) NOT NULL DEFAULT '0',
+  `time` int(11) NOT NULL DEFAULT 0,
   `ip` varchar(24) NOT NULL,
   `browser` varchar(50) NOT NULL,
   `dateonline` date NOT NULL
@@ -636,7 +599,7 @@ CREATE TABLE `user_online` (
 --
 
 INSERT INTO `user_online` (`session`, `time`, `ip`, `browser`, `dateonline`) VALUES
-('816fctjqp0nuekuq60esltl7u4', 1491277809, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb', '2017-04-04');
+('vf4ij6620f4gg0m381g2a4majc', 1574126760, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-19');
 
 -- --------------------------------------------------------
 
@@ -647,7 +610,7 @@ INSERT INTO `user_online` (`session`, `time`, `ip`, `browser`, `dateonline`) VAL
 CREATE TABLE `visiter` (
   `Id` int(11) NOT NULL,
   `session` varchar(100) NOT NULL DEFAULT '''''',
-  `time` int(11) NOT NULL DEFAULT '0',
+  `time` int(11) NOT NULL DEFAULT 0,
   `ip` varchar(24) NOT NULL,
   `browser` varchar(50) NOT NULL,
   `dateonline` date NOT NULL
@@ -658,65 +621,15 @@ CREATE TABLE `visiter` (
 --
 
 INSERT INTO `visiter` (`Id`, `session`, `time`, `ip`, `browser`, `dateonline`) VALUES
-(2, '1456825980', 1270, 'Mozilla/5.0 (Windows NT ', '2016-03-01', '0000-00-00'),
-(3, 'u15sou3lb29c5mro2vgrahugu3', 1456826004, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-01'),
-(4, 'n6971v5af3kbrmve3g0hhnh6i2', 1456826021, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0)', '2016-03-01'),
-(5, 'u15sou3lb29c5mro2vgrahugu3', 1456826038, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-01'),
-(6, 'u15sou3lb29c5mro2vgrahugu3', 1456826115, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-01'),
-(7, 'n6971v5af3kbrmve3g0hhnh6i2', 1456830148, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0)', '2016-03-01'),
-(8, 'athrmehegvarha5g2h2igoorc2', 1456857824, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-01'),
-(9, 'nra8eeqgb9t2uatm42d4fr2mr4', 1456927765, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-02'),
-(10, '11ml11mraqjrk9boluapoqlau7', 1456977971, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-03'),
-(11, '6217tfbqb6dek1aef4u616uha5', 1456977972, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-03'),
-(12, 'oojpfp5bgmggtjknupef2094q3', 1457061719, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-04'),
-(13, 'ufe6ipna8isig4f1j8pa64n0q0', 1457061720, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-04'),
-(14, 'j0s6euuvb5cthjqrrj3sj6pi97', 1457087447, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-04'),
-(15, 'v9n5hb1fliivanpte9pgm80mp5', 1457160920, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-05'),
-(16, 'upjtit7vu5p0db6hrmr4mfp5m2', 1457189666, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-05'),
-(17, 'j3egjmm0shrdmgpomvoncoc3d7', 1457246392, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-06'),
-(18, 'h6me5m2lj64uga2thqd24cdh74', 1457502114, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-09'),
-(19, '63a6idp353am4dvjfknu3dksk0', 1457522637, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-09'),
-(20, '0s5so7pvogve8i5lp9nqtsgq97', 1457542143, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-09'),
-(21, '25r22h8hal3rbqj7lfggevs4m3', 1457542641, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-09'),
-(22, 'n8edt08aut5449eoehamf60l21', 1457543311, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-09'),
-(23, 'igv6kb9l52tqeofg1b21jt66r6', 1457579200, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-10'),
-(24, 'fj65aursh80vqe3f3aarrijcj4', 1457580682, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-10'),
-(25, 'r0vrorb37asvmaqapqfqs7hdd2', 1457581555, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-10'),
-(26, 'ir8k2j5s84kmevpqnk6nu0mr66', 1457581850, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-10'),
-(27, 'ghpgnejg26es9l3dijkp1dc5p5', 1457582605, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-10'),
-(28, 'sb08aqlu1vmav0vsg3tjqi9686', 1457582715, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-10'),
-(29, 'jr75cu5jfmsvgm2nels1nukr82', 1457604875, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-10'),
-(30, 'op7fgfpu8lutmmvjogdacrpg77', 1457624257, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-10'),
-(31, 'ftapl0k0q554r0gfl0ljqd1ci6', 1457928426, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(32, '4jpn482mdk9dc0utp5k3jjtoe0', 1457928427, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(33, 'qaqgnilb2vleja1gfclc96vii6', 1457936959, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(34, 'vdvvvvl538j5lkvotr60a2h9g2', 1457956744, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(35, 'ktnumkqu68mbbf0u8nonbn1ej3', 1457962239, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(36, 's2mqpmio4t9g7omj78t9khurb4', 1457962758, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(37, '60agnncgn5r5gj0eo26hiqikg0', 1457967981, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(38, '5fctj754v0p82qkhuvnese0ne0', 1457968254, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(39, '0c1dbegjtv7d061o2su2rpr2p2', 1457968820, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(40, 'poenm4ui9bu5hge9ei1rti7md5', 1457971110, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(41, '2auuh22bt0vrg3n4bm51n27lu0', 1457971184, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(42, '06l5aqmh0b54r14g0begde1p25', 1457972434, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(43, '569i5e4s5oq0aef69lf0b87eg3', 1457974717, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(44, 'f3trnllaf4ju07e1nepgpbean4', 1457975380, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-14'),
-(45, '7jmfq3k12vthq6anep0dh3av56', 1458024787, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-15'),
-(46, '4m83pors4kn4qon8sto4964fr4', 1458025610, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-15'),
-(47, '2lu71cr6tefh78a4qikitv3pm2', 1458026089, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-15'),
-(48, 'tccac13jsag6dhukea2n8jhdh1', 1458184443, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(49, 'jrtttilad1bbu0rfhjg6kamn54', 1458197484, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(50, 'ou0a403o6e3l4u4ogb7lfvrso2', 1458213584, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(51, 'i1fnihddupc3l10uc0ftllr612', 1458215656, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(52, 'r48ga6i92r1as5sb3o4pj0fqd6', 1458215656, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(53, '7c069ghvrkslu7vrjkk9nafnl1', 1458218271, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(54, '11tqef9oi2c32fjmr9vfq523m2', 1458219755, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(55, 'v4it7rsl72quq4bvlm68kmauj3', 1458236974, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(56, '68jeh3us3bjt5r2doju7q56uf4', 1458237218, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(57, 'v4it7rsl72quq4bvlm68kmauj3', 1458239202, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-17'),
-(58, '9taac909nttrhusdn9onngrng4', 1458267457, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-18'),
-(59, '2g4u834q03mdbq4kfnpnga5ge1', 1458300153, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (K', '2016-03-18'),
-(60, '816fctjqp0nuekuq60esltl7u4', 1491277102, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb', '2017-04-04');
+(60, '3lfhd9k8k4s701f5gc2mlbh44s', 1573293177, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-09'),
+(61, 'dg25v5dvlpbcktq9ae8g8pl036', 1573359229, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-10'),
+(62, 'np56ep8sp9ke1ns4u3dsanh6fn', 1573378055, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-10'),
+(63, 'eot14hm4gni2npu63ij2jfnbfd', 1573525318, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-12'),
+(64, 'f4nv4qshtc6er4lf9t039jvh9m', 1573529469, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-12'),
+(65, '59vdiio983kvugsdbiirf3a77n', 1573784147, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-15'),
+(66, 'p8pk50kcqlupvd91626pvatgh8', 1573869316, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-16'),
+(67, '1l4ved0cb56coto00t45fgt323', 1573889035, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-16'),
+(68, 'vf4ij6620f4gg0m381g2a4majc', 1574126709, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebK', '2019-11-19');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -877,111 +790,133 @@ ALTER TABLE `visiter`
 --
 ALTER TABLE `advertise`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT cho bảng `banner`
 --
 ALTER TABLE `banner`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT cho bảng `contactinfo`
 --
 ALTER TABLE `contactinfo`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
   MODIFY `CustomerId` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT cho bảng `feedback`
 --
 ALTER TABLE `feedback`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT cho bảng `imageslide`
 --
 ALTER TABLE `imageslide`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT cho bảng `intro`
 --
 ALTER TABLE `intro`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT cho bảng `livesport`
 --
 ALTER TABLE `livesport`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT cho bảng `logo`
 --
 ALTER TABLE `logo`
   MODIFY `LogoId` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT cho bảng `menu`
 --
 ALTER TABLE `menu`
   MODIFY `MenuId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
 --
 -- AUTO_INCREMENT cho bảng `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
 --
 -- AUTO_INCREMENT cho bảng `role`
 --
 ALTER TABLE `role`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT cho bảng `slideshow`
 --
 ALTER TABLE `slideshow`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT cho bảng `subcategory`
 --
 ALTER TABLE `subcategory`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT cho bảng `supplies`
 --
 ALTER TABLE `supplies`
   MODIFY `SupplyId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT cho bảng `type`
 --
 ALTER TABLE `type`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
 --
 -- AUTO_INCREMENT cho bảng `visiter`
 --
 ALTER TABLE `visiter`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
@@ -1017,6 +952,7 @@ ALTER TABLE `subcategory`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `FK_User_Role` FOREIGN KEY (`RoleId`) REFERENCES `role` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

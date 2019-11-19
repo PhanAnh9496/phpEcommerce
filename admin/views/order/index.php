@@ -24,11 +24,9 @@
 				<td><?php echo $order['Createtime'];?></td>
 				<td><?php echo $status[$order['Status']];?></td>
 				<td>
-                            <a href="admin.php?controller=order&amp;action=edit&amp;oid=<?php echo $order['Id']; ?>"
-                               class="text-danger"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a href="admin.php?controller=order&amp;action=delete&amp;oid=<?php echo $order['Id']; ?>"
-                               class="text-danger"><i class="glyphicon glyphicon-remove"></i></a>
-                        </td>
+                    <a href="admin.php?controller=order&amp;action=delete&amp;id=<?php echo $order['Id']; ?>"
+                       class="text-danger deleteitem"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
 			</tr>
 			<?php endforeach; ?>
                 </tbody>

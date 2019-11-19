@@ -1,4 +1,10 @@
 <?php
+function orders_delete($id) {
+    $id = intval($id);
+    $sql = "DELETE FROM orders WHERE id=$id";
+    mysql_query($sql) or die(mysql_error());
+}
+
 function order_detail($oid) {
     $sql = "SELECT product.Id, product.Name,product.Image1, product.Price,product.TypeId, product.Percent_off, order_detail.Quantity
 			FROM order_detail
@@ -14,3 +20,4 @@ function order_detail($oid) {
     }
     return $data;
 }
+
